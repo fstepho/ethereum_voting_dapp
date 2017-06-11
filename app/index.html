@@ -12,9 +12,26 @@
   </style>
 </head>
 <body class="container">
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="../" class="navbar-brand">Blockshain.com</a>
+    
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-main">
+     
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://ethereum.org/  " target="_blank">Built With Solidity & web3</a></li>
+      </ul>
+
+    </div>
+  </div>
+</div>
 
 <div class="page-header">
-   <h1>Vote for your favorite restaurant</h1>
+   <h2>
+   La Ravigote? Le Bonal ?<br>
+   Vote for your favorite restaurant</h2>
   <p class="text-muted">Powered by Ethereum Blockchain and Fabibi.</p>
 </div>
   <div class="col-sm-7 margin-top-3">
@@ -90,35 +107,35 @@
       </div>
     </div>
     <div class="row margin-top-3">
-      <h2>Purchase Tokens</h2>
-      <div class="col-sm-12">
-          <div id="buy-msg"></div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Purchase Tokens</h3>
+        </div>
+        <div class="panel-body">
           <div class="form-group">
             <div class="col-lg-9">
-              <input type="text" id="buy" placeholder="Number of tokens to buy" class="form-control"/>
+              <input type="text" id="buy" placeholder="Number of tokens to buy" class="form-control">
             </div>
             <a href="#" onclick="buyTokens()" class="btn btn-primary">Buy</a>
           </div>
+        </div>
       </div>
     </div>
     <div class="row margin-top-3">
-      <h2>Lookup Voter Info</h2>
-      <div class="col-sm-12">
-        
-        <div class="form-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Lookup Voter Info</h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
             <div class="col-lg-9">
               <input type="text" id="voter-info" class="form-control" placeholder="Enter the voter address" />
             </div>
-            <a href="#" onclick="lookupVoterInfo()" class="btn btn-primary">Lookup</a>
+             <a href="#" onclick="lookupVoterInfo()" class="btn btn-primary">Lookup</a>
           </div>
-
-
-
-        <div class="voter-details row text-left">
-          <div id="tokens-bought" class="margin-top-3 col-md-12"></div>
-          <div id="votes-cast" class="col-md-12"></div>
         </div>
       </div>
+      <p id="votes-cast"></p>
     </div>
   </div>
 </body>
