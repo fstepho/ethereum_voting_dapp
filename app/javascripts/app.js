@@ -22,7 +22,6 @@ var Voting = contract(voting_artifacts);
 let candidates = {}
 
 let tokenPrice = null;
-$("#msg").hide();
 window.voteForCandidate = function(candidate) {
   let candidateName = $("#candidate").val();
   let voteTokens = $("#vote-tokens").val();
@@ -86,9 +85,11 @@ window.buyTokens = function() {
   let tokensToBuy = $("#buy").val();
   let price = tokensToBuy * tokenPrice;
   $("#buy-msg").html("Purchase order has been submitted. Please wait.");
+  $("#buy-msg").show();
   Voting.deployed().then(function(contractInstance) {
     contractInstance.buy({value: web3.toWei(price, 'ether'), from: web3.eth.accounts[0]}).then(function(v) {
       $("#buy-msg").html("");
+      $("#buy-msg").hide();
       web3.eth.getBalance(contractInstance.address, function(error, result) {
         $("#contract-balance").html(web3.fromWei(result.toString()) + " Ether");
       });
@@ -174,6 +175,9 @@ function populateTokenData() {
 }
 
 $( document ).ready(function() {
+  $("#buy-msg").hide();
+  $("#msg").hide();
+
   if (typeof web3 !== 'undefined') {
     console.warn("Using web3 detected from external source like Metamask")
     // Use Mist/MetaMask's provider
