@@ -121,11 +121,11 @@ contract Voting {
    this method and transfer the balance in to their account. In reality, you should add
    check to make sure only the owner of this contract can cash out.
    */
-
+/*
   function transferTo(address account) {
     account.send(this.balance);
   }
-
+*/
   function allCandidates() constant returns (bytes32[]) {
     return candidateList;
   }

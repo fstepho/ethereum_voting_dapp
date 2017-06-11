@@ -22,10 +22,12 @@ var Voting = contract(voting_artifacts);
 let candidates = {}
 
 let tokenPrice = null;
-
+$("#msg").hide();
 window.voteForCandidate = function(candidate) {
   let candidateName = $("#candidate").val();
   let voteTokens = $("#vote-tokens").val();
+  $("#msg").show();
+  $("#msg").attr('class', 'alert alert-dismissible alert-info');
   $("#msg").html("Vote has been submitted. The vote count will increment as soon as the vote is recorded on the blockchain. Please wait.")
   $("#candidate").val("");
   $("#vote-tokens").val("");
@@ -35,14 +37,44 @@ window.voteForCandidate = function(candidate) {
    * everywhere we have a transaction call
    */
   Voting.deployed().then(function(contractInstance) {
-    contractInstance.voteForCandidate(candidateName, voteTokens, {gas: 140000, from: web3.eth.accounts[0]}).then(function() {
-      let div_id = candidates[candidateName];
-      return contractInstance.totalVotesFor.call(candidateName).then(function(v) {
-        $("#" + div_id).html(v.toString());
-        $("#msg").html("");
-      });
+    contractInstance.voteForCandidate(candidateName, voteTokens, {from: web3.eth.accounts[0]}).then(function() {
+        // If this callback is called, the transaction was successfully processed.
+        // Note that Ether Pudding takes care of watching the network and triggering
+        // this callback.
+        let div_id = candidates[candidateName];
+        return contractInstance.totalVotesFor.call(candidateName).then(function(v) {
+          $("#" + div_id).html(v.toString());
+          $("#msg").hide();
+          $("#msg").html("");
+        }).catch(function(e) {
+          $("#msg").show();
+          $("#msg").attr('class', 'alert alert-dismissible alert-danger');
+          $("#msg").html(e.message);
+        });
+        
+        console.log("Transaction successful!")
+    }).catch(function(e) {
+        $("#msg").show();
+        $("#msg").attr('class', 'alert alert-dismissible alert-danger');
+        $("#msg").html(e.message);
+        console.log(e)
+    })
+  });
+/*
+Voting.deployed().then(function(contractInstance) {
+  contractInstance.voteForCandidate(candidateName, voteTokens, {gas: 140000, from: web3.eth.accounts[0]}).then(function() {
+    let div_id = candidates[candidateName];
+    return contractInstance.totalVotesFor.call(candidateName).then(function(v) {
+      $("#" + div_id).html(v.toString());
+      $("#msg").html("");
+    }).catch(function(e) {
+      $("#msg").html(e);
+      // There was an error! Handle it.  
     });
   });
+});
+*/
+
 }
 
 /* The user enters the total no. of tokens to buy. We calculate the total cost and send it in
@@ -60,9 +92,10 @@ window.buyTokens = function() {
       web3.eth.getBalance(contractInstance.address, function(error, result) {
         $("#contract-balance").html(web3.fromWei(result.toString()) + " Ether");
       });
+      populateTokenData();
     })
   });
-  populateTokenData();
+ 
 }
 
 window.lookupVoterInfo = function() {
@@ -154,4 +187,15 @@ $( document ).ready(function() {
   Voting.setProvider(web3.currentProvider);
   populateCandidates();
 
+
+  printBalances(web3.eth.accounts)
+
+
 });
+
+// Utility function to display the balances of each account.
+function printBalances(accounts) {
+  accounts.forEach(function(ac, i) {
+    console.log(i, web3.fromWei(web3.eth.getBalance(ac), 'ether').toNumber())
+  })
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vote for your favorite restaurant around Nation </title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://bootswatch.com/solar/bootstrap.min.css' rel='stylesheet' type='text/css'>
+
+  <style>
+    .margin-top-3 {
+      margin-top: 3em;
+    }
+  </style>
+</head>
+<body class="container">
+
+<div class="page-header">
+   <h1>Vote for your favorite restaurant</h1>
+  <p class="text-muted">Powered by Ethereum Blockchain and Fabibi.</p>
+</div>
+  <div class="col-sm-7 margin-top-3">
+    <h2>Candidates restaurants</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover ">
+        <thead>
+          <tr>
+            <th>Candidate restaurant</th>
+            <th>Votes</th>
+          </tr>
+        </thead>
+        <tbody id="candidate-rows">
+        </tbody>
+      </table>
+    </div>
+    <div class="well bs-component">
+      <form class="form-horizontal">
+        <fieldset>
+          <legend>Vote for restaurant</legend>
+          <div id="msg" class="alert alert-dismissible alert-success"></div>
+         
+          <div class="form-group">
+            <label for="candidate" class="col-lg-2 control-label">Restaurant</label>
+            <div class="col-lg-10">
+              <input type="text" id="candidate" placeholder="Enter the candidate name" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="vote-tokens" class="col-lg-2 control-label">Tokens</label>
+            <div class="col-lg-10">
+             <select class="form-control" id="vote-tokens" placeholder="Total no. of tokens to vote">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+         
+          <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+             <a href="#" onclick="voteForCandidate()" class="btn btn-primary">Vote</a>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-offset-1 col-sm-4 margin-top-3">
+    <div class="row">
+      <h2>Token Stats</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <tr>
+            <td>Tokens For Sale</td>
+            <td id="tokens-total"></td>
+          </tr>
+          <tr>
+            <td>Tokens Sold</td>
+            <td id="tokens-sold"></td>
+          </tr>
+          <tr>
+            <td>Price Per Token</td>
+            <td id="token-cost"></td>
+          </tr>
+          <tr>
+            <td>Balance in the contract</td>
+            <td id="contract-balance"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row margin-top-3">
+      <h2>Purchase Tokens</h2>
+      <div class="col-sm-12">
+          <div id="buy-msg"></div>
+          <div class="form-group">
+            <div class="col-lg-9">
+              <input type="text" id="buy" placeholder="Number of tokens to buy" class="form-control"/>
+            </div>
+            <a href="#" onclick="buyTokens()" class="btn btn-primary">Buy</a>
+          </div>
+      </div>
+    </div>
+    <div class="row margin-top-3">
+      <h2>Lookup Voter Info</h2>
+      <div class="col-sm-12">
+        
+        <div class="form-group">
+            <div class="col-lg-9">
+              <input type="text" id="voter-info" class="form-control" placeholder="Enter the voter address" />
+            </div>
+            <a href="#" onclick="lookupVoterInfo()" class="btn btn-primary">Lookup</a>
+          </div>
+
+
+
+        <div class="voter-details row text-left">
+          <div id="tokens-bought" class="margin-top-3 col-md-12"></div>
+          <div id="votes-cast" class="col-md-12"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="app.js"></script>
+</html>
