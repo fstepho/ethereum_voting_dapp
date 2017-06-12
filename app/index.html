@@ -31,8 +31,7 @@
 <div class="container">
 <div class="page-header">
    <h2>
-   La Ravigote? Le Bonal ?<br>
-   Vote for your favorite restaurant</h2>
+   La Ravigote? Le Bonal ? Vote for your favorite restaurant !</h2>
   <p class="text-muted">Powered by Ethereum Blockchain and Fabibi.</p>
 </div>
   <div class="col-sm-7 margin-top-3">
@@ -115,7 +114,7 @@
         </div>
         <div class="panel-body">
          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Number of tokens to buy" />
+            <input id="buy" type="text" class="form-control" placeholder="Number of tokens to buy" />
             <a href="#" onclick="buyTokens()" class="input-group-addon btn btn-primary">Buy</a>
          </div>
         </div>
@@ -128,16 +127,27 @@
         </div>
         <div class="panel-body">
          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Enter the voter address" />
+            <input id="voter-info" type="text" class="form-control" placeholder="Enter the voter address" />
             <a href="#" onclick="lookupVoterInfo()" class="input-group-addon btn btn-primary">Lookup</a>
          </div>
 
         </div>
       </div>
+      <div id="tokens-bought" class="alert alert-dismissible alert-info"></div>
       <p id="votes-cast"></p>
     </div>
   </div>
+  <table id="transactions" class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th colspan="2">Transactions</th>
+      </tr>
+    </thead>
+
+    <tbody></tbody>
+  </table>
   </div>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script src="app.js"></script>

@@ -103,6 +103,7 @@ window.lookupVoterInfo = function() {
   let address = $("#voter-info").val();
   Voting.deployed().then(function(contractInstance) {
     contractInstance.voterDetails.call(address).then(function(v) {
+      $("#tokens-bought").show();
       $("#tokens-bought").html("Total Tokens bought: " + v[0].toString());
       let votesPerCandidate = v[1];
       $("#votes-cast").empty();
@@ -177,7 +178,7 @@ function populateTokenData() {
 $( document ).ready(function() {
   $("#buy-msg").hide();
   $("#msg").hide();
-
+  $("#tokens-bought").hide();
   if (typeof web3 !== 'undefined') {
     console.warn("Using web3 detected from external source like Metamask")
     // Use Mist/MetaMask's provider
@@ -191,15 +192,52 @@ $( document ).ready(function() {
   Voting.setProvider(web3.currentProvider);
   populateCandidates();
 
+  web3.eth.getAccounts(function(error, accounts){
+    getTransactionsByAccount(accounts[0]);
 
-  printBalances(web3.eth.accounts)
-
-
+  });
 });
 
-// Utility function to display the balances of each account.
-function printBalances(accounts) {
-  accounts.forEach(function(ac, i) {
-    console.log(i, web3.fromWei(web3.eth.getBalance(ac), 'ether').toNumber())
-  })
+function getTransactionsByAccount(myaccount) {
+  var filter = web3.eth.filter('latest');
+  filter.watch(function (error, blockash) {
+    console.log("Searching block from hash : " + blockash);
+    web3.eth.getBlock(blockash, function(error, block){
+      if(!error){
+        if (block != null && block.transactions != null) {
+          block.transactions.forEach( function(transactionHash) {
+            web3.eth.getTransaction(transactionHash, function(error, e){
+              if (myaccount == "*" || myaccount == e.from || myaccount == e.to) {
+
+                $("#transactions > tbody").append("<tr class='info'><td>tx hash</td><td>" + e.hash + " ("+ new Date(block.timestamp * 1000).toGMTString() +")</td></tr>");
+                $("#transactions > tbody").append("<tr><td>nonce</td><td>" + e.nonce + "</td></tr>");
+                $("#transactions > tbody").append("<tr><td>blockHash</td><td>" + e.blockHash + "</td></tr>");
+                $("#transactions > tbody").append("<tr><td>blockNumber</td><td>" + e.blockNumber + "</td></tr>");
+                $("#transactions > tbody").append("<tr><td>from -> to</td><td>" + e.from + " -> " + e.to +"</td></tr>");
+                $("#transactions > tbody").append("<tr><td>value</td><td>" + e.value + "</td></tr>");
+                  
+                $("#transactions > tbody").append("<tr><td>gasPrice</td><td>" + e.gasPrice + "</td></tr>");
+                $("#transactions > tbody").append("<tr><td>gas</td><td>" + e.gas +"</td></tr>");
+                $("#transactions > tbody").append("<tr><td>input</td><td>" + e.input + "</td></tr>");
+                console.log("  tx hash          : " + e.hash + "\n"
+                  + "   nonce           : " + e.nonce + "\n"
+                  + "   blockHash       : " + e.blockHash + "\n"
+                  + "   blockNumber     : " + e.blockNumber + "\n"
+                  + "   transactionIndex: " + e.transactionIndex + "\n"
+                  + "   from            : " + e.from + "\n" 
+                  + "   to              : " + e.to + "\n"
+                  + "   value           : " + e.value + "\n"
+                  + "   time            : " + block.timestamp + " " + new Date(block.timestamp * 1000).toGMTString() + "\n"
+                  + "   gasPrice        : " + e.gasPrice + "\n"
+                  + "   gas             : " + e.gas + "\n"
+                  + "   input           : " + e.input);
+              }
+            });
+          })
+        }
+      } else {
+          console.error(error);
+      }
+    });
+  });
 }
