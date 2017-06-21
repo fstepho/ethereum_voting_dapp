@@ -218,7 +218,6 @@ function getTransactionsByAccount(myaccount) {
                   
                 $("#transactions > tbody").append("<tr><td>gasPrice</td><td>" + e.gasPrice + "</td></tr>");
                 $("#transactions > tbody").append("<tr><td>gas</td><td>" + e.gas +"</td></tr>");
-                $("#transactions > tbody").append("<tr><td>input</td><td>" + e.input + "</td></tr>");
                 console.log("  tx hash          : " + e.hash + "\n"
                   + "   nonce           : " + e.nonce + "\n"
                   + "   blockHash       : " + e.blockHash + "\n"
