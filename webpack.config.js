@@ -27,6 +27,7 @@ module.exports = {
     ],
     loaders: [
       { test: /\.json$/, use: 'json-loader' },
+	  { test: /\.(png|jpg)$/, use: 'url-loader' },
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
@@ -39,3 +40,4 @@ module.exports = {
     ]
   }
 }
+	

@@ -4,18 +4,63 @@
   <title>Vote for your favorite restaurant around Nation </title>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <link href='https://bootswatch.com/yeti/bootstrap.min.css' rel='stylesheet' type='text/css'>
- 
+
   <style>
     .margin-top-3 {
       margin-top: 3em;
     }
+	
+	/*! Slider boostrap CSS */
+	.slider{display:inline-block;vertical-align:middle;position:relative}.slider.slider-horizontal{width:210px;height:20px}.slider.slider-horizontal .slider-track{height:10px;width:100%;margin-top:-5px;top:50%;left:0}.slider.slider-horizontal .slider-selection,.slider.slider-horizontal .slider-track-low,.slider.slider-horizontal .slider-track-high{height:100%;top:0;bottom:0}.slider.slider-horizontal .slider-tick,.slider.slider-horizontal .slider-handle{margin-left:-10px}.slider.slider-horizontal .slider-tick.triangle,.slider.slider-horizontal .slider-handle.triangle{position:relative;top:50%;transform:translateY(-50%);border-width:0 10px 10px 10px;width:0;height:0;border-bottom-color:#0480be;margin-top:0}.slider.slider-horizontal .slider-tick-container{white-space:nowrap;position:absolute;top:0;left:0;width:100%}.slider.slider-horizontal .slider-tick-label-container{white-space:nowrap;margin-top:20px}.slider.slider-horizontal .slider-tick-label-container .slider-tick-label{padding-top:4px;display:inline-block;text-align:center}.slider.slider-horizontal.slider-rtl .slider-track{left:initial;right:0}.slider.slider-horizontal.slider-rtl .slider-tick,.slider.slider-horizontal.slider-rtl .slider-handle{margin-left:initial;margin-right:-10px}.slider.slider-horizontal.slider-rtl .slider-tick-container{left:initial;right:0}.slider.slider-vertical{height:210px;width:20px}.slider.slider-vertical .slider-track{width:10px;height:100%;left:25%;top:0}.slider.slider-vertical .slider-selection{width:100%;left:0;top:0;bottom:0}.slider.slider-vertical .slider-track-low,.slider.slider-vertical .slider-track-high{width:100%;left:0;right:0}.slider.slider-vertical .slider-tick,.slider.slider-vertical .slider-handle{margin-top:-10px}.slider.slider-vertical .slider-tick.triangle,.slider.slider-vertical .slider-handle.triangle{border-width:10px 0 10px 10px;width:1px;height:1px;border-left-color:#0480be;border-right-color:#0480be;margin-left:0;margin-right:0}.slider.slider-vertical .slider-tick-label-container{white-space:nowrap}.slider.slider-vertical .slider-tick-label-container .slider-tick-label{padding-left:4px}.slider.slider-vertical.slider-rtl .slider-track{left:initial;right:25%}.slider.slider-vertical.slider-rtl .slider-selection{left:initial;right:0}.slider.slider-vertical.slider-rtl .slider-tick.triangle,.slider.slider-vertical.slider-rtl .slider-handle.triangle{border-width:10px 10px 10px 0}.slider.slider-vertical.slider-rtl .slider-tick-label-container .slider-tick-label{padding-left:initial;padding-right:4px}.slider.slider-disabled .slider-handle{background-image:-webkit-linear-gradient(top,#dfdfdf 0,#bebebe 100%);background-image:-o-linear-gradient(top,#dfdfdf 0,#bebebe 100%);background-image:linear-gradient(to bottom,#dfdfdf 0,#bebebe 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdfdfdf',endColorstr='#ffbebebe',GradientType=0)}.slider.slider-disabled .slider-track{background-image:-webkit-linear-gradient(top,#e5e5e5 0,#e9e9e9 100%);background-image:-o-linear-gradient(top,#e5e5e5 0,#e9e9e9 100%);background-image:linear-gradient(to bottom,#e5e5e5 0,#e9e9e9 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe5e5e5',endColorstr='#ffe9e9e9',GradientType=0);cursor:not-allowed}.slider input{display:none}.slider .tooltip.top{margin-top:-36px}.slider .tooltip-inner{white-space:nowrap;max-width:none}.slider .hide{display:none}.slider-track{position:absolute;cursor:pointer;background-image:-webkit-linear-gradient(top,#f5f5f5 0,#f9f9f9 100%);background-image:-o-linear-gradient(top,#f5f5f5 0,#f9f9f9 100%);background-image:linear-gradient(to bottom,#f5f5f5 0,#f9f9f9 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5',endColorstr='#fff9f9f9',GradientType=0);-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,0.1);box-shadow:inset 0 1px 2px rgba(0,0,0,0.1);border-radius:4px}.slider-selection{position:absolute;background-image:-webkit-linear-gradient(top,#f9f9f9 0,#f5f5f5 100%);background-image:-o-linear-gradient(top,#f9f9f9 0,#f5f5f5 100%);background-image:linear-gradient(to bottom,#f9f9f9 0,#f5f5f5 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9',endColorstr='#fff5f5f5',GradientType=0);-webkit-box-shadow:inset 0 -1px 0 rgba(0,0,0,0.15);box-shadow:inset 0 -1px 0 rgba(0,0,0,0.15);-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-radius:4px}.slider-selection.tick-slider-selection{background-image:-webkit-linear-gradient(top,#89cdef 0,#81bfde 100%);background-image:-o-linear-gradient(top,#89cdef 0,#81bfde 100%);background-image:linear-gradient(to bottom,#89cdef 0,#81bfde 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff89cdef',endColorstr='#ff81bfde',GradientType=0)}.slider-track-low,.slider-track-high{position:absolute;background:transparent;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-radius:4px}.slider-handle{position:absolute;top:0;width:20px;height:20px;background-color:#337ab7;background-image:-webkit-linear-gradient(top,#149bdf 0,#0480be 100%);background-image:-o-linear-gradient(top,#149bdf 0,#0480be 100%);background-image:linear-gradient(to bottom,#149bdf 0,#0480be 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf',endColorstr='#ff0480be',GradientType=0);filter:none;-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(0,0,0,.05);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(0,0,0,.05);border:0 solid transparent}.slider-handle.round{border-radius:50%}.slider-handle.triangle{background:transparent none}.slider-handle.custom{background:transparent none}.slider-handle.custom::before{line-height:20px;font-size:20px;content:'\2605';color:#726204}.slider-tick{position:absolute;width:20px;height:20px;background-image:-webkit-linear-gradient(top,#f9f9f9 0,#f5f5f5 100%);background-image:-o-linear-gradient(top,#f9f9f9 0,#f5f5f5 100%);background-image:linear-gradient(to bottom,#f9f9f9 0,#f5f5f5 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9',endColorstr='#fff5f5f5',GradientType=0);-webkit-box-shadow:inset 0 -1px 0 rgba(0,0,0,0.15);box-shadow:inset 0 -1px 0 rgba(0,0,0,0.15);-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;filter:none;opacity:.8;border:0 solid transparent}.slider-tick.round{border-radius:50%}.slider-tick.triangle{background:transparent none}.slider-tick.custom{background:transparent none}.slider-tick.custom::before{line-height:20px;font-size:20px;content:'\2605';color:#726204}.slider-tick.in-selection{background-image:-webkit-linear-gradient(top,#89cdef 0,#81bfde 100%);background-image:-o-linear-gradient(top,#89cdef 0,#81bfde 100%);background-image:linear-gradient(to bottom,#89cdef 0,#81bfde 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff89cdef',endColorstr='#ff81bfde',GradientType=0);opacity:1}
+	.slider-selection {
+		background: #008cba;
+	}
+.btn {
+    padding: 0px 6px;
+}
+.progress{
+    margin-bottom: 8px;
+	}
+.progress-bar{
+    line-height: 16px;
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+	margin-top: 4px;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+.table-responsive.mini-padding table tbody td{
+	padding:4px;
+}
+
+
+.address-tag, .hash-tag-frontpage, .shorturl-tag1 {
+    display: inline-block;
+    vertical-align: bottom;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.address-tag {
+    width: 132px;
+}
+.marketing .col-lg-4 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
   </style>
 </head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <a href="../" class="navbar-brand">Blockshain.com</a>
+      <a href="../" class="navbar-brand">(C) Object'ive - Démonstrateur Blockchain</a>
     
     </div>
     <div class="navbar-collapse collapse" id="navbar-main">
@@ -29,18 +74,52 @@
 </div>
 
 <div class="container">
+
+	  
 <div class="page-header">
    <h2>
    La Ravigote? Le Bonal ? Vote for your favorite restaurant !</h2>
   <p class="text-muted">Powered by Ethereum Blockchain and Fabibi.</p>
 </div>
-  <div class="col-sm-7 margin-top-3">
-    <h2>Candidates restaurants</h2>
+
+<div class="row marketing well">
+<div class="col-lg-4">
+  <span class="img-circle glyphicon glyphicon-globe" aria-hidden="true" style="font-size: 90px;"></span>
+  <h2>Decentralized</h2>
+  <p>This Voting app is a completely decentralized platform, without any central points of failure. The vote calls are executed directly between the voter and the smartc contract.</p>
+</div>
+<div class="col-lg-4">
+  <span class="img-circle glyphicon glyphicon-sunglasses" aria-hidden="true" style="font-size: 90px;"></span>
+  <h2>Trustless</h2>
+  <p>This app achieves an unprecedented level of trustlessness. Voter can vote anonymously; No trust is needed in anyone, us included, it's all enforced by algorithms.</p>
+</div>
+<div class="col-lg-4">
+  <span class="img-circle glyphicon glyphicon-lock" aria-hidden="true" style="font-size: 90px;"></span>
+  <h2>Secure</h2>
+  <p>This voting app bases all its processing on top of the Ethereum blockchain. This means that all your transactions are validated, executed and enforced by a <a href="http://ethernodes.org/network/1" target="_blank"><em>global network</em></a> of machines. Everyone plays by the same, open and public ledger.</p>
+</div>
+</div>
+
+<div class="alert alert-dismissible alert-info">
+<button type="button" class="close" data-dismiss="alert">×</button>
+
+<span><strong>Ethereum Network</strong> : <a class="alert-link" target="_blank" href="https://ropsten.etherscan.io">Ropsten Test Net</a></span>
+<br>
+<span><strong>Voting dApp Smart contract address </strong> : <span id="contract-address"></span></span>
+<br>
+<span><strong>Your current address </strong> : <span id="current-address"></span></span>
+
+</div>
+
+ <div id="msg" class="alert alert-dismissible alert-success"></div>
+ 
+  <div class="col-sm-7 margin-top-2">
+    <h3>Candidates</h3>
     <div class="table-responsive">
       <table class="table table-bordered table-striped table-hover ">
         <thead>
           <tr>
-            <th>Candidate restaurant</th>
+            <th>Candidate</th>
             <th>Votes</th>
           </tr>
         </thead>
@@ -48,6 +127,7 @@
         </tbody>
       </table>
     </div>
+	<!--
     <div class="well bs-component">
       <form class="form-horizontal">
         <fieldset>
@@ -81,11 +161,29 @@
         </fieldset>
       </form>
     </div>
+	-->
   </div>
-  <div class="col-sm-offset-1 col-sm-4 margin-top-3">
-    <div class="row">
-      <h2>Token Stats</h2>
-      <div class="table-responsive">
+
+  <div class="col-sm-offset-1 col-sm-4 margin-top-2">
+    <div class="row margin-top-1">
+      <h3>My infos</h3>
+      <div class="table-responsive mini-padding">
+        <table class="table table-bordered">
+          <tr>
+            <td>Tokens bought</td>
+            <td id="my-tokens-bought"></td>
+          </tr>
+          <tr>
+            <td>Tokens remaining</td>
+            <td id="my-tokens-remaining"></td>
+          </tr>
+         
+        </table>
+      </div>
+    </div>
+    <div class="row margin-top-1">
+      <h3>Token Stats</h3>
+      <div class="table-responsive mini-padding">
         <table class="table table-bordered">
           <tr>
             <td>Tokens For Sale</td>
@@ -106,7 +204,7 @@
         </table>
       </div>
     </div>
-    <div class="row margin-top-3">
+    <div class="row margin-top-2">
       <div id="buy-msg" class="alert alert-dismissible alert-success"></div>
       <div class="panel panel-primary">
         <div class="panel-heading">
@@ -120,7 +218,7 @@
         </div>
       </div>
     </div>
-    <div class="row margin-top-3">
+    <div class="row margin-top-2">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">Lookup Voter Info</h3>
@@ -128,7 +226,7 @@
         <div class="panel-body">
          <div class="input-group">
             <input id="voter-info" type="text" class="form-control" placeholder="Enter the voter address" />
-            <a href="#" onclick="lookupVoterInfo()" class="input-group-addon btn btn-primary">Lookup</a>
+            <a href="#" onclick="lookupVoterInfo()" class="input-group-addon btn btn-primary"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Lookup</a>
          </div>
 
         </div>
@@ -137,18 +235,27 @@
       <p id="votes-cast"></p>
     </div>
   </div>
-  <table id="transactions" class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th colspan="2">Transactions</th>
-      </tr>
-    </thead>
-
-    <tbody></tbody>
-  </table>
+  <div class="col-sm-12 margin-top-2">
+	  <h3>Transactions History</h3>
+	  <table id="transactions" class="table"><tbody><tr>
+		<th>TxHash</th>
+		<th>Block</th>
+		<th><span title="UTC time">Age</span></th>
+		<th>From</th>
+		<th></th>
+		<th>To</th>
+		<th>Value</th>
+		<th><span rel="tooltip" data-placement="bottom" title="" data-original-title="(GasPrice * GasUsed By Txn) in Ether"><font color="silver" size="1">[TxFee]</font></span>
+		</th>
+	   </tr></tbody></table>
+	
+  </div>
   </div>
 
 </body>
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
+
 <script src="app.js"></script>
 </html>

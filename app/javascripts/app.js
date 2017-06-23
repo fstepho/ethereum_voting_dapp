@@ -1,4 +1,5 @@
 // Import the page's CSS. Webpack will know what to do with it.
+
 import "../stylesheets/app.css";
 
 // Import libraries we need.
@@ -15,22 +16,26 @@ import { default as contract } from 'truffle-contract'
  * https://gist.github.com/maheshmurthy/f6e96d6b3fff4cd4fa7f892de8a1a1b4#file-index-js
  */
 
+  
 import voting_artifacts from '../../build/contracts/Voting.json'
+
+
+var SolidityCoder = require("web3/lib/solidity/coder.js");
+
 
 var Voting = contract(voting_artifacts);
 
 let candidates = {}
 
 let tokenPrice = null;
-window.voteForCandidate = function(candidate) {
-  let candidateName = $("#candidate").val();
-  let voteTokens = $("#vote-tokens").val();
+window.voteForCandidate = function(candidateName, voteTokens) {
   $("#msg").show();
-  $("#msg").attr('class', 'alert alert-dismissible alert-info');
+  $("#msg").attr('class', 'alert alert-dismissible alert-success');
   $("#msg").html("Vote has been submitted. The vote count will increment as soon as the vote is recorded on the blockchain. Please wait.")
   $("#candidate").val("");
   $("#vote-tokens").val("");
-
+  
+  $("#"+candidates[candidateName]+"-loading").show();
   /* Voting.deployed() returns an instance of the contract. Every call
    * in Truffle returns a promise which is why we have used then()
    * everywhere we have a transaction call
@@ -42,9 +47,11 @@ window.voteForCandidate = function(candidate) {
         // this callback.
         let div_id = candidates[candidateName];
         return contractInstance.totalVotesFor.call(candidateName).then(function(v) {
-          $("#" + div_id).html(v.toString());
+		  $("#" + div_id+"-progress").attr('style', "width: "+ (v.toString()/15)*100 +"%" );
+		  $("#" + div_id+"-progress").html(v.toString());
           $("#msg").hide();
           $("#msg").html("");
+		  $("#"+candidates[candidateName]+"-loading").hide();
         }).catch(function(e) {
           $("#msg").show();
           $("#msg").attr('class', 'alert alert-dismissible alert-danger');
@@ -56,6 +63,7 @@ window.voteForCandidate = function(candidate) {
         $("#msg").show();
         $("#msg").attr('class', 'alert alert-dismissible alert-danger');
         $("#msg").html(e.message);
+		$("#"+candidates[candidateName]+"-loading").hide();
         console.log(e)
     })
   });
@@ -101,6 +109,30 @@ window.buyTokens = function() {
 
 window.lookupVoterInfo = function() {
   let address = $("#voter-info").val();
+  lookupVoterInfoByAdress(address);
+}
+
+window.lookupMyInfo = function() {
+
+  
+	web3.eth.getAccounts(function(error, accounts){
+	   Voting.deployed().then(function(contractInstance) {
+		contractInstance.voterDetails.call(accounts[0]).then(function(v) {
+			$("#my-tokens-bought").html( v[0].toString());
+			let votesPerCandidate = v[1];
+			let tokensUsed = 0;
+			let allCandidates = Object.keys(candidates);
+			for(let i=0; i < allCandidates.length; i++) {
+				tokensUsed += parseInt(votesPerCandidate[i]);
+			}
+			$("#my-tokens-remaining").html( v[0] - tokensUsed);
+		});
+	  });
+	});
+  
+}
+
+window.lookupVoterInfoByAdress = function(address) {
   Voting.deployed().then(function(contractInstance) {
     contractInstance.voterDetails.call(address).then(function(v) {
       $("#tokens-bought").show();
@@ -115,6 +147,8 @@ window.lookupVoterInfo = function() {
     });
   });
 }
+
+
 
 /* Instead of hardcoding the candidates hash, we now fetch the candidate list from
  * the blockchain and populate the array. Once we fetch the candidates, we setup the
@@ -142,15 +176,19 @@ function populateCandidateVotes() {
     let name = candidateNames[i];
     Voting.deployed().then(function(contractInstance) {
       contractInstance.totalVotesFor.call(name).then(function(v) {
-        $("#" + candidates[name]).html(v.toString());
+		 var progress =  "<div><div style='margin-top: 4px;' class='col-md-1 glyphicon glyphicon-lock'> </div><div class='col-md-8 progress progress-striped'><div id='"+candidates[name]+"-progress' class='progress-bar progress-bar-info active' style='width: "+ (v.toString()/15)*100 +"%'>" + v.toString() + "</div></div><div class='col-md-2'><a href='#' onclick='voteForCandidate(\""+name+"\",1)' class='text-left btn btn-primary'><span class='glyphicon glyphicon-thumbs-up' aria-hidden='true'></span> </a></div><span id='" + candidates[name] + "-loading' style='display:none' class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span></div>";
+        $("#" + candidates[name]).html(progress );
       });
     });
   }
 }
+  
 
 function setupCandidateRows() {
   Object.keys(candidates).forEach(function (candidate) { 
-    $("#candidate-rows").append("<tr><td>" + candidate + "</td><td id='" + candidates[candidate] + "'></td></tr>");
+    $("#candidate-rows").append("<tr><td>" + candidate + "</td><td id='" + candidates[candidate] + "'> </td></tr>");
+
+	
   });
 }
 
@@ -192,12 +230,40 @@ $( document ).ready(function() {
   }
 
   Voting.setProvider(web3.currentProvider);
+  lookupMyInfo();
   populateCandidates();
 
+  
+  
   web3.eth.getAccounts(function(error, accounts){
-    getTransactionsByAccount(accounts[0]);
-
+	$("#current-address").html('<a target="_blank" href="https://ropsten.etherscan.io/address/"'+accounts[0]+'" class="alert-link">'+accounts[0]+'</a>');
+    //getTransactionsByAccount(accounts[0]);
   });
+  
+   Voting.deployed().then(function(contractInstance) {
+	$("#contract-address").html('<a target="_blank" href="https://ropsten.etherscan.io/address/'+contractInstance.address+'" class="alert-link">'+contractInstance.address+'</a>');
+	
+   });
+  
+  $.getJSON('http://ropsten.etherscan.io/api?module=account&action=txlist&address=0x5ec4e9d787e12a7f839ee4a6cfeccbfc63f3f833&startblock=0&endblock=99999999&sort=desc&apikey=YourApiKeyToken', function (data) {
+	console.log(data);
+	Voting.deployed().then(function(contractInstance) {
+		//var functionHashes = getFunctionHashes(contractInstance.abi); 
+		for (var i =1; i < data.result.length; i++) {
+			// Decode function
+		
+			//var func = findFunctionByHash(functionHashes, data.result[i].input);
+			//console.log(func);
+			//var inputData = SolidityCoder.decodeParams(['string', 'uint256'],  data.result[i].input.replace('0x', ''));
+			//var inputData = SolidityCoder.decodeParam("uint256", data.result[i].input.replace('0x',''))
+			//console.log(inputData.c[0]);
+			
+			$("#transactions > tbody").append("<tr><td><a target='_blank' class='address-tag' href='https://ropsten.etherscan.io/tx/"+data.result[i].hash+"'>"+data.result[i].hash+"</a></td><td><a target='_blank' href='https://ropsten.etherscan.io/block/"+data.result[i].blockNumber+"'>"+data.result[i].blockNumber+"</a></td><td><span rel='tooltip' data-placement='bottom' title='' data-original-title=''>"+getDateTimeSince(data.result[i].timeStamp*1000)+" ago</span></td><td><a target='_blank' class='address-tag' href='https://ropsten.etherscan.io/address/"+data.result[i].from+"'>"+ data.result[i].from + "</a></td><td><span class='label label-success rounded'>&nbsp; IN &nbsp;</span></td><td><i class='fa fa-file-text-o' rel='tooltip' data-placement='bottom' title='' data-original-title='Contract'></i> <span class='address-tag'>"+data.result[i].to+"</span></td><td>"+data.result[i].value/1000000000000000000+" Ether</td><td><font color='gray' size='1'>0<b>.</b>00141376</font></td></tr>");
+			
+		}
+	 });
+  })
+  
 });
 
 function getTransactionsByAccount(myaccount) {
@@ -211,7 +277,7 @@ function getTransactionsByAccount(myaccount) {
             web3.eth.getTransaction(transactionHash, function(error, e){
               if (myaccount == "*" || myaccount == e.from || myaccount == e.to) {
 
-                $("#transactions > tbody").append("<tr class='info'><td>tx hash</td><td>" + e.hash + " ("+ new Date(block.timestamp * 1000).toGMTString() +")</td></tr>");
+                $("#transactions > tbody").append("<tr class='info'><td>tx hash</td><td>" + e.hash + " ("+ new Date(block.timestamp ).toGMTString() +")</td></tr>");
                 $("#transactions > tbody").append("<tr><td>nonce</td><td>" + e.nonce + "</td></tr>");
                 $("#transactions > tbody").append("<tr><td>blockHash</td><td>" + e.blockHash + "</td></tr>");
                 $("#transactions > tbody").append("<tr><td>blockNumber</td><td>" + e.blockNumber + "</td></tr>");
@@ -231,7 +297,7 @@ function getTransactionsByAccount(myaccount) {
                   + "   time            : " + block.timestamp + " " + new Date(block.timestamp * 1000).toGMTString() + "\n"
                   + "   gasPrice        : " + e.gasPrice + "\n"
                   + "   gas             : " + e.gas + "\n"
-                  + "   input           : " + e.input);
+                  + "   input           : " + web3.toAscii(e.input));
               }
             });
           })
@@ -241,4 +307,53 @@ function getTransactionsByAccount(myaccount) {
       }
     });
   });
+}
+
+
+
+// Get function hashes
+// TODO: also extract input parameter types for later decoding
+
+function getFunctionHashes(abi) {
+  var hashes = [];
+  for (var i=0; i<abi.length; i++) {
+    var item = abi[i];
+    if (item.type != "function") continue;
+    var signature = item.name + "(" + item.inputs.map(function(input) {return input.type;}).join(",") + ")";
+    var hash = web3.sha3(signature);
+    console.log(item.name + '=' + hash);
+    hashes.push({name: item.name, hash: hash});
+  }
+  return hashes;
+}
+
+function findFunctionByHash(hashes, functionHash) {
+  for (var i=0; i<hashes.length; i++) {
+    if (hashes[i].hash.substring(0, 10) == functionHash.substring(0, 10))
+      return hashes[i].name;
+  }
+  return null;
+}
+
+
+function getDaysInMonth(month,year) {     
+    if( typeof year == "undefined") year = 1999; // any non-leap-year works as default     
+    var currmon = new Date(year,month),     
+        nextmon = new Date(year,month+1);
+    return Math.floor((nextmon.getTime()-currmon.getTime())/(24*3600*1000));
+} 
+function getDateTimeSince(target) { // target should be a Date object
+    var now = new Date(), diff, yd, md, dd, hd, nd, sd, out = [];
+    diff = Math.floor(now.getTime()-target);
+	
+	
+	var totalSeconds = diff / 1000;
+	var days = Math.floor(totalSeconds / 86400); // 86400 = 24 hours * 60 minutes * 60 seconds per day
+	var hours = Math.floor((totalSeconds % 86400) / 3600); // 3600 = 60 minutes * 60 seconds per day
+	var minutes = Math.floor((totalSeconds % 3600) / 60); // 60 = 60 se
+		
+    if( days > 0) out.push( days+" day"+(days == 1 ? "" : "s"));
+    if( hours > 0) out.push( hours+" hr"+(hours == 1 ? "" : "s"));
+	if( minutes > 0) out.push( minutes+" mn"+(minutes == 1 ? "" : "s"));
+    return out.join(" ");
 }
