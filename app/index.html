@@ -54,6 +54,11 @@
     text-align: center;
 }
 
+.candidates td {
+    padding: 17px !important;
+}
+	
+
   </style>
 </head>
 <body>
@@ -103,11 +108,11 @@
 <div class="alert alert-dismissible alert-info">
 <button type="button" class="close" data-dismiss="alert">×</button>
 
-<span><strong>Ethereum Network</strong> : <a class="alert-link" target="_blank" href="https://ropsten.etherscan.io">Ropsten Test Net</a></span>
+<span><i title="Network" class="glyphicon glyphicon-globe"></i> <strong> Ethereum Network</strong> : <a class="alert-link" target="_blank" href="https://ropsten.etherscan.io">Ropsten Test Net</a></span>
 <br>
-<span><strong>Voting dApp Smart contract address </strong> : <span id="contract-address"></span></span>
+<span><i title="Contract" class="glyphicon glyphicon-file"></i><strong> Voting dApp Smart contract address </strong> : <span id="contract-address"></span></span>
 <br>
-<span><strong>Your current address </strong> : <span id="current-address"></span></span>
+<span><i title="Address" class="glyphicon glyphicon-info-sign"></i><strong> Your current address </strong> : <span id="current-address"></span></span>
 
 </div>
 
@@ -116,7 +121,7 @@
   <div class="col-sm-7 margin-top-2">
     <h3>Candidates</h3>
     <div class="table-responsive">
-      <table class="table table-bordered table-striped table-hover ">
+      <table class="candidates table table-bordered table-striped table-hover ">
         <thead>
           <tr>
             <th>Candidate</th>
